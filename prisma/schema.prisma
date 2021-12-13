@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Filme {
+  id                Int       @default(autoincrement()) @id
+  nome              String
+  imagem            String?
+  datlanca          String
+  tempdura          String
+  genero            Genero @relation(fields: [generoid], references: [id])
+  generoid          Int
+  participante      Participante @relation(fields: [participanteid], references: [id])
+  participanteid    Int
+}
+
+model Genero {
+  id                Int       @default(autoincrement()) @id
+  nome              String
+  filmes            Filme[]
+}
+
+model Participante {
+  id                Int       @default(autoincrement()) @id
+  nome              String
+  imagem            String
+  datanasc          String
+  ator              String
+  filmes            Filme[]
+}
